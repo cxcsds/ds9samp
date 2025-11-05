@@ -16,6 +16,17 @@ There is also the
 Python package that should be reviewed to see if it better meets
 your needs.
 
+## Installation
+
+The package is available [on PyPI](https://pypi.org/project/ds9samp/)
+and so can be installed with commands like
+
+    pip install ds9samp
+
+or
+
+    uv pip install ds9samp
+
 ## Usage
 
 The aim is to support the "simple" case where
