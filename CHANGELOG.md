@@ -1,5 +1,10 @@
 # Changes for ds9samp
 
+## Version 0.1.1 - 2025-11-05
+
+Minor additions to the documentation on installation and how to
+select from multiple running DS9 instances.
+
 ## Version 0.1.0 - 2025-02-06
 
 Add the `get_raw` routine which does not try to read in the data
