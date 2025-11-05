@@ -152,6 +152,14 @@ with a command like
 
 (replacing cl3 by one of the values reported by list_samp).
 
+The following will select the first DS9 instance and return the name
+of the file the selected frame is displaying:
+
+    import ds9samp
+    clients = ds9samp.list_ds9()
+    with ds9samp.ds9samp(client=clients[0]) as ds9:
+        print(ds9.get("file"))
+
 """
 
 from contextlib import contextmanager
