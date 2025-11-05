@@ -309,7 +309,7 @@ There are 2 DS9 clients: c1 c3
 
 ```
 
-### What happens if there are multiple DS9 instances?
+## What happens if there are multiple DS9 instances?
 
 A call to `ds9samp` or `start` can error out with the message:
 
@@ -334,6 +334,21 @@ something like
 
 (chose one of the names from the output above) as it should display
 a pop up window centered on the DS9 instance.
+
+### From Python
+
+Both `ds9samp.ds9samp` and `ds9samp.start` accept an optional `client`
+argument, which should be set to the name of the DS9 instance you want
+to connect to. For example, the following will select the **first**
+DS9 instance in the list (it uses `ds9samp.list_ds9` to identify the
+names of the DS9 instances):
+
+    import ds9samp
+    clients = ds9samp.list_ds9()
+    with ds9samp.ds9samp(client=clients[0]) as ds9:
+        do_something_awesome(ds9)
+
+### Using the scripts
 
 The `ds9samp_get` and `ds9samp_set` commands accept a `--name` argument
 which accepts the client name reported by `ds9samp_list`.
