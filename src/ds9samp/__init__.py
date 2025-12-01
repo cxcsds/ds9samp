@@ -172,6 +172,7 @@ import sys
 import tempfile
 from typing import Protocol
 from urllib.parse import urlparse
+from urllib.request import url2pathname
 
 import numpy as np
 
@@ -335,6 +336,7 @@ def extract_url(
     if res.scheme != "file":
         error(f"expected file url, not {url}")
         return None
+    path = url2pathname(res.path)
 
     # Look at all the DS9 samp commands at
     # https://ds9.si.edu/doc/ref/samp.html
@@ -354,20 +356,20 @@ def extract_url(
     #   fits        .fits      FITS
     #
     #
-    if any(res.path.endswith(f".{end}") for end in ["dat", "rgn", "txt"]):
+    if any(path.endswith(f".{end}") for end in ["dat", "rgn", "txt"]):
         # What's the best encoding?
-        with open(res.path, mode="rt", encoding="ascii") as fh:
+        with open(path, mode="rt", encoding="ascii") as fh:
             return fh.read()
 
-    if res.path.endswith(".fits"):
+    if path.endswith(".fits"):
         return fits.open(res.path)
 
-    if res.path.endswith(".arr"):
+    if path.endswith(".arr"):
         if img is None:
             error("Sent array but no image data")
             return None
 
-        return read_array(res.path, img)
+        return read_array(path, img)
 
     error(f"Unable to determine contents of {url}")
     return None
@@ -963,11 +965,12 @@ class Connection:
         if res.scheme != "file":
             error(f"expected file url, not {url}")
             return None
+        path = url2pathname(res.path)
 
-        if not res.path.endswith(".fits"):
+        if not path.endswith(".fits"):
             warning("expected file url to end in .fits")
 
-        return fits.open(res.path)
+        return fits.open(path)
 
     def send_cat(
         self, data: Table | SupportsWriteTo, *, timeout: int | None = None
