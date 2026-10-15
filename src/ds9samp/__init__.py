@@ -175,7 +175,14 @@ from urllib.parse import urlparse
 
 import numpy as np
 
-from astropy import samp  # type: ignore
+# Prefer pyvo.samp as astropy.samp was deprecated in
+# astropy>=8.0
+
+try:
+    from pyvo import samp
+except ImportError:
+    from astropy import samp  # type: ignore
+
 from astropy.io import fits  # type: ignore
 from astropy.table import Table  # type: ignore
 
